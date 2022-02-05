@@ -4,10 +4,6 @@ const client = new Discord.Client({intents: ["GUILDS", "GUILD_MESSAGES"]});
 
 client.login(process.env.BOT_TOKEN)
 
-client.on("ready", () => {
-    console.log("Bot is ready")
-})
-
 client.on("messageCreate", msg => {
     if (msg.content === "hey") {
         msg.reply("hi there")
@@ -17,3 +13,15 @@ client.on("messageCreate", msg => {
         msg.react("❤️")
     }
 })
+
+client.on('ready', () => {
+    console.log(`Logged in as ${client.user.tag}!`);
+});
+  
+client.on('interactionCreate', async interaction => {
+    if (!interaction.isCommand()) return;
+
+    if (interaction.commandName === 'ping') {
+        await interaction.reply('Pong!');
+    }
+});
