@@ -77,10 +77,11 @@ const respond = (userId, placeId, placeName, number, price) => {
       role = "INVALID";
       break;
   }
-  const blocks = number === 1? "1 block" : "${number} blocks"
-  const pings = "<@&${role}> <@&${all}>";
-  const message = "<@{userId}> has requested ${blocks} for $${price} each from ${placeName} ${pings}";
+  const blocks = number === 1 ? "1 block" : number + " blocks";
+  const pings = "<@&" + role + "> <@&" + all + ">";
+  const message =
+    "<@!" + userId + "> has requested " + blocks + " for $" + price + " each from " + placeName + " " + pings;
   return message;
-}
+};
 
-module.exports = { respond }
+module.exports = { respond };
