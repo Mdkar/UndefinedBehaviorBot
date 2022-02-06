@@ -25,6 +25,7 @@ const placeNameMap = {
   und: "The Underground",
   urb: "Urban Revolution",
   sus: "Wild Blue Sushi",
+  sel: "Sold Block"
 };
 
 const Discord = require("discord.js");
@@ -57,6 +58,24 @@ client.on("interactionCreate", async (interaction) => {
 
   if (interaction.commandName === "ping") {
     await interaction.reply("Pong!");
+  } else if (interaction.commandName === "rep") {
+    const userId = interaction.options.getUser("user").id;
+    const result = getInfo(userId);
+    let output
+    if (result) {
+        const rating = result[1]
+        const numOrders = result[2]
+        let history = result[3].split(',').slice(1,lastOrdersArr.length)
+        history = history.map(str => str.split(' '))
+        output = `<!@${userId}> has a ${rating}/5 rating with ${numOrders} transactions\nRecent History:\n`
+        history.forEach(pair => {
+            output+=placeNameMap[pair[0]]+'  $'+pair[1]+'\n'
+        });
+    } else {
+        output = "No prior data found about this user"
+    }
+    await interaction.reply(output);
+
   } else if (interaction.commandName === "buy") {
     const place = interaction.options.getString("food-destination");
     const placeName = placeNameMap[place];

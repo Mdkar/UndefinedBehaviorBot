@@ -12,6 +12,10 @@ const commands = [
     .setName("ping")
     .setDescription("Replies with pong!"),
   new SlashCommandBuilder()
+    .setName("rep")
+    .setDescription("Find user reputation and recent order history")
+    .addUserOption(option => option.setName('user').setDescription('The user')),
+  new SlashCommandBuilder()
     .setName("buy")
     .setDescription("Pings the channel that someone wants a block")
     .addStringOption((option) =>

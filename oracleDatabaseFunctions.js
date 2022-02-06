@@ -33,9 +33,9 @@ async function update(userId, newVote, price, location='sel') {
 
     // Now query the rows back
 
-    const result = await connection.execute(`SELECT * FROM users`);
+    // const result = await connection.execute(`SELECT * FROM users`);
 
-    console.dir(result.rows, { depth: null });
+    // console.dir(result.rows, { depth: null });
 
     // search for particular user
     // let userId = 1
@@ -43,7 +43,7 @@ async function update(userId, newVote, price, location='sel') {
     // let price = 6
     // let newVote = 3
     const user = await connection.execute(`SELECT * FROM users WHERE id=${userId}`)
-    console.dir(user)
+    // console.dir(user)
     if(user.rows.length == 0) {
         let numOrders = 1
         if(newVote <= 0) {
@@ -53,7 +53,7 @@ async function update(userId, newVote, price, location='sel') {
         await connection.execute(`INSERT INTO ${users}
                                     VALUES (${userId}, ${newVote}, ${numOrders}, ',${location} ${price}');`)
     } else {
-        console.log(user.rows)
+        // console.log(user.rows)
         let rating = user.rows[0][1]
         let numOrders = user.rows[0][2]
         let sum = rating * numOrders;
@@ -88,4 +88,14 @@ async function update(userId, newVote, price, location='sel') {
   }
 }
 
-module.exports = {update}
+async function getInfo(userId) {
+  const user = await connection.execute(`SELECT * FROM users WHERE id=${userId}`)
+  if(user.rows.length == 0) {
+    return []
+  } else {
+    return user.rows[0]
+  }
+
+}
+
+module.exports = {update, getInfo}
