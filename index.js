@@ -3,26 +3,26 @@ const { respond } = require("./respond.js");
 
 const placeNameMap = {
     "abp": "Au Bon Pain",
-    .addChoice("Back Bar Grill", "bbb")
-    .addChoice("Beefsteak", "bs")
-    .addChoice("Egg Shoppe", "eg")
-    .addChoice("Cucina", "cc")
-    .addChoice("Entropy", "ent")
-    .addChoice("Exchange", "ecg")
-    .addChoice("El Gallo de Oro", "gal")
-    .addChoice("Grano", "gno")
-    .addChoice("Hunan Express", "hun")
-    .addChoice("Innovation Kitchen", "ink")
-    .addChoice("La Prima", "lap")
-    .addChoice("Nourish", "nrs")
-    .addChoice("Tepper Eatery", "tep")
-    .addChoice("Rooted", "rot")
-    .addChoice("Schatz", "sch")
-    .addChoice("Tahini", "tah")
-    .addChoice("Taste of India", "tas")
-    .addChoice("Underground", "und")
-    .addChoice("Urban Revolution", "urb")
-    .addChoice("Wild Blue Sushi", "sus")
+    "bbb": "Back Bar Grill", 
+    "bs": "Beefsteak", 
+    "eg": "Egg Shoppe", 
+    "cc": "Cucina", 
+    "ent": "Entropy", 
+    "ecg": "Exchange", 
+    "gal": "El Gallo de Oro", 
+    "gno": "Grano", 
+    "hun": "Hunan Express", 
+    "ink": "Innovation Kitchen", 
+    "lap": "La Prima", 
+    "nrs": "Nourish", 
+    "tep": "Tepper Eatery", 
+    "rot": "Rooted", 
+    "sch": "Schatz", 
+    "tah": "Tahini", 
+    "tas": "Taste of India", 
+    "und": "Underground", 
+    "urb": "Urban Revolution", 
+    "sus": "Wild Blue Sushi", 
 }
 
 const Discord = require("discord.js");
@@ -57,7 +57,7 @@ client.on("interactionCreate", async (interaction) => {
     await interaction.reply("Pong!");
   } else if (interaction.commandName === "buy") {
     const place = interaction.options.getString("food-destination");
-    const placeName = interaction.options.get("food-destination").options;
+    const placeName = placeNameMap[place];
     const count = interaction.options.getInteger("num-blocks");
     const price = interaction.options.getInteger("price-per-block");
     const userId = interaction.user.id;
