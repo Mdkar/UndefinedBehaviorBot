@@ -1,6 +1,9 @@
 require("dotenv").config();
 const Discord = require("discord.js");
-const client = new Discord.Client({ intents: ["GUILDS", "GUILD_MESSAGES"] });
+const client = new Discord.Client({
+  intents: ["GUILDS", "GUILD_MESSAGES"],
+  allowedMentions: { parse: ["users", "roles"] },
+});
 
 client.login(process.env.BOT_TOKEN);
 
