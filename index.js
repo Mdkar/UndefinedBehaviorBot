@@ -1,5 +1,6 @@
 require("dotenv").config();
 const { respond } = require("./respond.js");
+const channelId = "939752273712672798";
 
 const placeNameMap = {
   abp: "Au Bon Pain",
@@ -39,7 +40,7 @@ client.on("messageCreate", (msg) => {
     msg.reply("hi there");
   } else if (msg.content === "u good bro") {
     msg.channel.send("nah");
-  } else if (msg.content === "rtn is epic") {
+  } else if (msg.content === "tartanhacks is epic") {
     msg.react("❤️");
   } else if (msg.content === "ruthie is the best") {
     msg.channel.send("yes i agree");
@@ -62,6 +63,7 @@ client.on("interactionCreate", async (interaction) => {
     const price = interaction.options.getInteger("price-per-block");
     const userId = interaction.user.id;
     const message = respond(userId, place, placeName, count, price);
-    await interaction.reply(message);
+    const blockMarket = client.channels.cache.get(channelId);
+    await blockMarket.send(message);
   }
 });

@@ -80,8 +80,19 @@ const respond = (userId, placeId, placeName, number, price) => {
   const blocks = number === 1 ? "1 block" : number + " blocks";
   const pings = "<@&" + role + "> <@&" + all + ">";
   const message =
-    "<@!" + userId + "> has requested " + blocks + " for $" + price + " each from " + placeName + " " + pings;
-  return message;
+    "<@!" +
+    userId +
+    "> has requested " +
+    blocks +
+    " for $" +
+    price +
+    " each from " +
+    placeName +
+    " " +
+    pings;
+  const footer =
+    "\n\nReact with :x: to cancel the order and :white_check_mark: if order has been fulfilled.";
+  return message + footer;
 };
 
 module.exports = { respond };
