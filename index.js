@@ -27,12 +27,10 @@ const placeNameMap = {
 };
 
 const Discord = require("discord.js");
-let Intss = new Discord.Intents(Discord.Intents.ALL);
 const client = new Discord.Client({
-  intents: ["GUILDS", "GUILD_MESSAGES"],
+  intents: ["GUILDS", "GUILD_MESSAGES", "GUILD_MESSAGE_REACTIONS"],
   allowedMentions: { parse: ["users", "roles"] },
   guild_id: process.env.GUILD_ID,
-  ws: { intents: Intss }
 });
 
 client.login(process.env.BOT_TOKEN);
@@ -80,10 +78,15 @@ client.on("interactionCreate", async (interaction) => {
 client.on("messageReactionAdd", async (reaction, user) => {
   const emoji = reaction.emoji;
   const message = reaction.message;
+  console.log("Reaction:");
+  console.log(reaction);
+  console.log("Message:");
   console.log(message);
-  if (reaction === "✅") {
+  console.log("Emoji");
+  console.log(emoji);
+  if (emoji === "✅") {
     console.log("foo");
-  } else if (reaction === "❌") {
+  } else if (emoji === "❌") {
     console.log("bar");
   }
 });
