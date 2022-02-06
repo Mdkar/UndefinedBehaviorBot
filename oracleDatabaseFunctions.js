@@ -89,11 +89,27 @@ async function update(userId, newVote, price, location='sel') {
 }
 
 async function getInfo(userId) {
-  const user = await connection.execute(`SELECT * FROM users WHERE id=${userId}`)
-  if(user.rows.length == 0) {
-    return []
-  } else {
-    return user.rows[0]
+  let connection;
+
+  try {
+
+    connection = await oracledb.getConnection({ user: "admin", password: process.env.ORACLEDB_PASSWORD, connectionString: "userdata_high" });
+    const user = await connection.execute(`SELECT * FROM users WHERE id=${userId}`)
+    if(user.rows.length == 0) {
+      return []
+    } else {
+      return user.rows[0]
+    }
+  } catch (err) {
+    console.error(err);
+  } finally {
+    if (connection) {
+      try {
+        await connection.close();
+      } catch (err) {
+        console.error(err);
+      }
+    }
   }
 
 }

@@ -14,7 +14,8 @@ const commands = [
   new SlashCommandBuilder()
     .setName("rep")
     .setDescription("Find user reputation and recent order history")
-    .addUserOption(option => option.setName('user').setDescription('The user')),
+    .addUserOption(option => option.setName('username').setDescription('The user')
+      .setRequired(true)),
   new SlashCommandBuilder()
     .setName("buy")
     .setDescription("Pings the channel that someone wants a block")
