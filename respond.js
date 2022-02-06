@@ -90,9 +90,7 @@ const respond = (userId, placeId, placeName, number, price) => {
     placeName +
     " " +
     pings;
-  const footer =
-    "\n\nReact with :x: to cancel the order and :white_check_mark: if order has been fulfilled.";
-  return message + footer;
+  return message;
 };
 
 module.exports = { respond };

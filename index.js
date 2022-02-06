@@ -64,6 +64,13 @@ client.on("interactionCreate", async (interaction) => {
     const userId = interaction.user.id;
     const message = respond(userId, place, placeName, count, price);
     const blockMarket = client.channels.cache.get(channelId);
-    await blockMarket.send(message);
+    const msg = await blockMarket.send(message);
+    await msg.react("❌");
+    await msg.react("✅");
+    await interaction.reply(
+      "Your order was placed successfully. React to your order in <#" +
+        channelId +
+        "> with :x: to cancel the order and :white_check_mark: if order has been fulfilled."
+    );
   }
 });
