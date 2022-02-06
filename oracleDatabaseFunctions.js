@@ -1,7 +1,10 @@
 const oracledb = require('oracledb');
 require('dotenv').config()
 
-async function update(userId, newVote, price, location='sel') {
+async function update(userIdStr, newVote, price, location='sel') {
+
+  console.log(userIdStr);
+  const userId = parseInt(userIdStr, 10);
 
   let connection;
 
@@ -50,10 +53,12 @@ async function update(userId, newVote, price, location='sel') {
             newVote = 5
             numOrders--
         }
-        await connection.execute(`INSERT INTO ${users}
-                                    VALUES (${userId}, ${newVote}, ${numOrders}, ',${location} ${price}');`)
+        const exec = `INSERT INTO users (id, rating, orders, lastOrder)
+        VALUES (${userId}, ${newVote}, ${numOrders}, ',${location} ${price}')`
+        console.log(exec);
+        await connection.execute(exec);
     } else {
-        // console.log(user.rows)
+        console.log(`Rows: ${user.rows}`);
         let rating = user.rows[0][1]
         let numOrders = user.rows[0][2]
         let sum = rating * numOrders;
@@ -88,7 +93,8 @@ async function update(userId, newVote, price, location='sel') {
   }
 }
 
-async function getInfo(userId) {
+async function getInfo(userIdStr) {
+  const userId = parseInt(userIdStr, 10);
   let connection;
 
   try {
