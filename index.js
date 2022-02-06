@@ -28,7 +28,7 @@ const placeNameMap = {
 
 const Discord = require("discord.js");
 const client = new Discord.Client({
-  intents: ["GUILDS", "GUILD_MESSAGES"],
+  intents: ["GUILDS", "GUILD_MESSAGES", "USER", "REACTION", "MESSAGE"],
   allowedMentions: { parse: ["users", "roles"] },
   guild_id: process.env.GUILD_ID,
 });
