@@ -27,10 +27,12 @@ const placeNameMap = {
 };
 
 const Discord = require("discord.js");
+let Intss = new Discord.Intents(Discord.Intents.ALL);
 const client = new Discord.Client({
-  intents: ["GUILDS", "GUILD_MESSAGES", "USER", "REACTION", "MESSAGE"],
+  intents: ["GUILDS", "GUILD_MESSAGES"],
   allowedMentions: { parse: ["users", "roles"] },
   guild_id: process.env.GUILD_ID,
+  ws: { intents: Intss }
 });
 
 client.login(process.env.BOT_TOKEN);
