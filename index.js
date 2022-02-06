@@ -81,8 +81,7 @@ client.on("messageReactionAdd", async (reaction, user) => {
   console.log(message);
   if (reaction === "✅") {
     console.log("foo");
-  }
-  else if (reaction === "❌") {
+  } else if (reaction === "❌") {
     console.log("bar");
   }
-})
+});
