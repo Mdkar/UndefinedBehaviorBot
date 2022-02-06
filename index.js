@@ -74,3 +74,15 @@ client.on("interactionCreate", async (interaction) => {
     );
   }
 });
+
+client.on("messageReactionAdd", async (reaction, user) => {
+  const emoji = reaction.emoji;
+  const message = reaction.message;
+  console.log(message);
+  if (reaction === "✅") {
+    console.log("foo");
+  }
+  else if (reaction === "❌") {
+    console.log("bar");
+  }
+})
