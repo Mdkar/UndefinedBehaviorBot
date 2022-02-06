@@ -1,6 +1,9 @@
 require("dotenv").config();
 const Discord = require("discord.js");
-const client = new Discord.Client({ intents: ["GUILDS", "GUILD_MESSAGES"] });
+const client = new Discord.Client({
+  intents: ["GUILDS", "GUILD_MESSAGES"],
+  guild_id: process.env.GUILD_ID,
+});
 
 client.login(process.env.BOT_TOKEN);
 
@@ -25,7 +28,7 @@ client.on("interactionCreate", async (interaction) => {
 
   if (interaction.commandName === "ping") {
     await interaction.reply("Pong!");
-  } else if (interaction.commandName === "sell") {
-    await interaction.reply("Sell a block!");
+  } else if (interaction.commandName === "buy") {
+    await interaction.reply("Someone is looking to buy a block!");
   }
 });
