@@ -50,8 +50,6 @@ client.login(process.env.BOT_TOKEN);
 client.on("messageCreate", (msg) => {
   if (msg.content === "hey") {
     msg.reply("hi there");
-  } else if (msg.content === "u good bro") {
-    msg.channel.send("nah");
   } else if (msg.content === "tartanhacks is epic") {
     msg.react("❤️");
   } else if (msg.content === "ruthie is the best") {
@@ -70,16 +68,14 @@ client.on("interactionCreate", async (interaction) => {
     await interaction.reply("Pong!");
   } else if (interaction.commandName === "rep") {
     const userId = interaction.options.getUser("username").id;
-    console.log(userId)
     const result = await getInfo(userId);
     let output
-    console.log(result)
     if (result.length > 0) {
         const rating = result[1]
         const numOrders = result[2]
         let history = result[3].split(',').slice(1)
         history = history.map(str => str.split(' '))
-        output = `<@!${userId}> has a ${rating}/5 rating with ${numOrders} transactions\nRecent History:\n`
+        output = `<@!${userId}> has a ${Math.round(rating * 100) / 100}/5 rating with ${numOrders} transactions\nRecent History:\n`
         history.forEach(pair => {
             output+=placeNameMap[pair[0]]+'  $'+pair[1]+'\n'
         });
@@ -117,10 +113,7 @@ client.on("messageReactionAdd", async (reaction, user) => {
   const fromIdx = message.content.lastIndexOf('from ')+5
   const endLoc = message.content.substring(fromIdx).indexOf('<');
   const fullLoc = message.content.substring(fromIdx,fromIdx+endLoc-1)
-  console.log(fullLoc)
   const location = Object.keys(placeNameMap).find(key => placeNameMap[key] == fullLoc);
-  console.log(price)
-  console.log(location)
   if (userId !== user.id) {
     return;
   }
