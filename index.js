@@ -28,7 +28,7 @@ const placeNameMap = {
 
 const Discord = require("discord.js");
 const client = new Discord.Client({
-  intents: ["GUILDS", "GUILD_MESSAGES", "USER", "REACTION", "MESSAGE"],
+  intents: ["GUILDS", "GUILD_MESSAGES", "GUILD_MESSAGE_REACTIONS"],
   allowedMentions: { parse: ["users", "roles"] },
   guild_id: process.env.GUILD_ID,
 });
@@ -88,4 +88,4 @@ client.on("messageReactionAdd", async (reaction, user) => {
   else if (emoji.name === "❌") {
     console.log("bar");
   }
-})
+});
