@@ -79,7 +79,7 @@ client.on("messageReactionAdd", async (reaction, user) => {
   const emoji = reaction.emoji;
   const message = reaction.message;
   const userId = message.content.substring(3, 21);
-  if (userId !== reaction.author.id) {
+  if (userId !== user.id) {
     return;
   }
   if (emoji.name === "✅") {
