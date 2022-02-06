@@ -31,7 +31,12 @@ const client = new Discord.Client({
   intents: ["GUILDS", "GUILD_MESSAGES", "GUILD_MESSAGE_REACTIONS"],
   allowedMentions: { parse: ["users", "roles"] },
   guild_id: process.env.GUILD_ID,
+  partials: ["CHANNEL"],
 });
+
+const orderCompleted = [];
+const ratingBuyer = [];
+const ratingSeller = [];
 
 client.login(process.env.BOT_TOKEN);
 
@@ -84,11 +89,56 @@ client.on("messageReactionAdd", async (reaction, user) => {
   }
   if (emoji.name === "✅") {
     console.log("foo");
-    user.send("Your order has been completed!\nWho did you buy a block from?")
+    user.send("Your order has been completed!\nWho did you buy a block from? Please enter their discord username.")
+    orderCompleted.push(user.id);
     await message.delete();
   }
   else if (emoji.name === "❌") {
     console.log("bar");
     await message.delete();
+  }
+});
+
+client.on("message", msg => {
+  if (msg.channel.type == "dm") {
+    let i = orderCompleted.indexOf(msg.author.id);
+    if (i > -1) {
+      const seller = client.users.cache.find(user => user.username == msg.content);
+      if (seller === undefined) {
+        msg.author.send("There is no user with that name! Try again!");
+      }
+      else {
+        orderCompleted.splice(i, 1);
+        msg.author.send("Please rate your seller on a scale from 1-5.");
+        ratingSeller.push({
+          buyer: msg.author.id,
+          seller: seller,
+        });
+        seller.send(msg.author.username + " recently bought a block from you.\nPlease give them a rating from 1-5.");
+        ratingBuyer.push({
+          seller: seller,
+          buyer: msg.author.id
+        });
+      }
+    }
+    i = ratingBuyer.findIndex(info => info.seller === msg.author.id);
+    if (i > -1) {
+      const rating = parseInt(msg.content, 10);
+      if (rating === NaN || rating < 1 || rating > 5) {
+        msg.author.send("Invalid Rating! Try again!");
+      }
+      else {
+        console.log("Mihir sends the rating to the database!");
+      }
+    }
+    i = ratingSeller.findIndex(info => info.buyer === msg.author.id);
+    if (i > -1) {
+      const rating = parseInt(msg.content, 10);
+      if (rating === NaN || rating < 1 || rating > 5) {
+        msg.author.send("Invalid Rating! Try again!");
+      } else {
+        console.log("Mihir sends the rating to the database!");
+      }
+    }
   }
 });
