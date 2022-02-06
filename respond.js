@@ -80,7 +80,16 @@ const respond = (userId, placeId, placeName, number, price) => {
   const blocks = number === 1 ? "1 block" : number + " blocks";
   const pings = "<@&" + role + "> <@&" + all + ">";
   const message =
-    "<@!" + userId + "> has requested " + blocks + " for $" + price + " each from " + placeName + " " + pings;
+    "<@!" +
+    userId +
+    "> has requested " +
+    blocks +
+    " for $" +
+    price +
+    " each from " +
+    placeName +
+    " " +
+    pings;
   return message;
 };
 
