@@ -1,7 +1,7 @@
 const oracledb = require('oracledb');
 require('dotenv').config()
 
-async function run() {
+async function update(userId, newVote, price, location='sel') {
 
   let connection;
 
@@ -38,13 +38,20 @@ async function run() {
     console.dir(result.rows, { depth: null });
 
     // search for particular user
-    let userId = 1
-    let location = "bbb" 
-    let price = 6
-    let newVote = 3
+    // let userId = 1
+    // let location = "bbb" 
+    // let price = 6
+    // let newVote = 3
     const user = await connection.execute(`SELECT * FROM users WHERE id=${userId}`)
+    console.dir(user)
     if(user.rows.length == 0) {
-        console.log("create new")
+        let numOrders = 1
+        if(newVote <= 0) {
+            newVote = 5
+            numOrders--
+        }
+        await connection.execute(`INSERT INTO ${users}
+                                    VALUES (${userId}, ${newVote}, ${numOrders}, ',${location} ${price}');`)
     } else {
         console.log(user.rows)
         let rating = user.rows[0][1]
@@ -66,7 +73,7 @@ async function run() {
                                     SET rating=${rating}, orders=${numOrders}, lastOrder='${lastOrders}' 
                                     WHERE id=${userId}`)
     }
-    console.dir(user)
+    connection.commit();
 
   } catch (err) {
     console.error(err);
@@ -81,4 +88,4 @@ async function run() {
   }
 }
 
-run();
+module.exports = {update}
