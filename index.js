@@ -84,8 +84,11 @@ client.on("messageReactionAdd", async (reaction, user) => {
   }
   if (emoji.name === "✅") {
     console.log("foo");
+    user.send("Your order has been completed!\nWho did you buy a block from?")
+    await message.delete();
   }
   else if (emoji.name === "❌") {
     console.log("bar");
+    await message.delete();
   }
 });
