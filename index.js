@@ -78,11 +78,14 @@ client.on("interactionCreate", async (interaction) => {
 client.on("messageReactionAdd", async (reaction, user) => {
   const emoji = reaction.emoji;
   const message = reaction.message;
-  console.log(message);
-  if (reaction === "✅") {
+  const userId = message.content.substring(3, 21);
+  if (userId !== reaction.author.id) {
+    return;
+  }
+  if (emoji.name === "✅") {
     console.log("foo");
   }
-  else if (reaction === "❌") {
+  else if (emoji.name === "❌") {
     console.log("bar");
   }
 })
